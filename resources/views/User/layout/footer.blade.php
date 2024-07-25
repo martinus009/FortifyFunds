@@ -14,7 +14,7 @@
             <div class="footer-box get-in-touch">
               <h2 class="widget-title">Hubungi Kami</h2>
               <ul>
-                <li>Bekasi Timur, Jawa Barat, Indonesia.</li>
+                <li>Jl. Raya Pantura No.8, Ancol, Kec. Pademangan, Jkt Utara, Daerah Khusus Ibukota Jakarta 14430</li>
                 <li>support@fortifyfunds.com</li>
                 <li>0895-6402-10203</li>
               </ul>
@@ -101,5 +101,67 @@
     <script src="{{ asset('import/assets/js/main.js') }}"></script>
     <script src="{{ asset('import/assets/js/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('import/assets/js/script.js') }}"></script>
+
+    <script src="{{ asset('import/admin/assets/modules/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('import/admin/assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('import/admin/assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
+    <script src="{{ asset('import/admin/assets/modules/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+  <!-- Page Specific JS File -->
+    <script src="{{ asset('import/admin/assets/js/page/modules-datatables.js') }}"></script>
+
+<script>
+
+    function validateAmount() {
+        var amount = document.getElementById('amount').value.replace(/[^\d]/g, '');
+
+        var prosesButton = document.getElementById('prosesButton');
+
+        if (amount !== '' && parseInt(amount, 10) >= 10000) {
+            prosesButton.disabled = false;
+        } else {
+            prosesButton.disabled = true;
+        }
+    }
+
+    function showTransferConfirmation() {
+        var amount = document.getElementById('amount').value.replace(/[^\d]/g, '');
+
+        if (amount === '') {
+            // Jika amount kosong, keluar dari fungsi
+            return;
+        }
+
+        amount = parseInt(amount, 10);
+
+        if (amount >= 10000) {
+            let formattedAmount = formatAmount(amount);
+            document.getElementById('confirmedAmount').textContent = formattedAmount;
+
+            let totalAmount = amount + 2500;
+            let formattedTotal = formatAmount(totalAmount);
+
+            document.getElementById('totalAmount').textContent = formattedTotal;
+
+            $('#confirmationModal').modal('show');
+        }
+    }
+
+    function formatAmount(amount) {
+        return 'Rp. ' + amount.toLocaleString('id-ID');
+    }
+
+    function confirmTransfer() {
+        document.getElementById('confirmationForm').submit();
+    }
+
+    function cancelConfirmation() {
+        $('#confirmationModal').modal('hide');
+    }
+</script>
+
+
+
   </body>
 </html>

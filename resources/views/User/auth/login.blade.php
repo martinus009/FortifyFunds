@@ -3,15 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script
-            src="https://kit.fontawesome.com/5b78f342f3.js"
-            crossorigin="anonymous"
-        ></script>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-        <link
-            rel="stylesheet"
-            href="{{ asset('import/assets/css/admin.css')}}"
-        />
+        <script src="https://kit.fontawesome.com/5b78f342f3.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <link rel="stylesheet" href="{{ asset('import/assets/css/admin.css')}}"/>
         <title>FortifyFunds | Keamanan Yang Kuat Untuk Keuangan Anda</title>
     </head>
     <body>
@@ -44,13 +38,13 @@
         @endif --}}
 
     <!-- Tampilkan pesan error -->
-    @if (session('error'))
+    {{-- @if (session('error'))
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 toastr.error("{{ session('error') }}");
             });
         </script>
-    @endif
+    @endif --}}
 
         <div class="container">
             <div class="forms-container">
@@ -70,20 +64,7 @@
                             Lupa Password? <a href="{{ route('forgot') }}">Klik Disini</a>
                         </p>
                         <input type="submit" value="Login" class="btn solid" />
-                        <!-- <div class="social-media">
-              <a href="#" class="social-icon">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-            </div> -->
+
                     </form>
                     <form action="{{ route('input') }}" method="POST" class="sign-up-form">
                         @csrf
@@ -148,7 +129,7 @@
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit. Nostrum laboriosam ad deleniti.
                         </p>
-                        <button class="btn transparent" id="sign-up-btn">DAFTAR</button>
+                        <button class="btn transparent" id="sign-in-btn">MASUK</button>
                     </div>
                     <img src="{{ asset('import/assets/img/register.svg')}}" class="image" alt="" />
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -37,6 +38,7 @@ class LoginController extends Controller
             $user->email = $validatedData['email'];
             $user->phone = $validatedData['phone'];
             $user->password = bcrypt($validatedData['password']);
+            $user->status = 'offline';
             $user->save();
 
             return redirect()->route('login')->with('success', 'Pendaftaran Berhasil, Silakan Login.');
@@ -53,43 +55,78 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        $auth = Auth::guard('users')->attempt(['username' => $request->username, 'password' => $request->password]);
+        $user = User::where('username', $request->username)->first();
+
+        if ($user && $user->blocked_until && $user->blocked_until > now()) {
+            return redirect()->back()->withErrors([
+                'username' => 'Maaf, Akun Anda telah Di Tangguhkan untuk sementara waktu.',
+            ])->withInput($request->only('username'));
+        }
+
+        $auth = Auth::guard('users')->attempt([
+            'username' => $request->username,
+            'password' => $request->password
+        ]);
+
         if ($auth) {
+            $user->status = 'online';
+            $user->save();
+
             return redirect()->route('Dashboard');
         }
 
         return redirect()->back()->withErrors([
-            'username' => 'Maaf, Sepertinya Username Atau Password Anda Salah',
+            'username' => 'Maaf, Username atau Password Anda Salah.',
         ])->withInput($request->only('username'));
     }
 
+
+
     public function logout()
     {
+        $user = Auth::guard('users')->user();
+
         Auth::guard('users')->logout();
+
+        if ($user) {
+            $user->status = 'offline';
+            $user->save();
+        }
+
         Session::flash('successMessage', 'Terima Kasih Atas Kepercayaan Anda');
         return redirect()->route('Dashboard');
     }
+
 
     public function forgotpassword()
     {
         return view('User.auth.reset');
     }
 
-    public function resetpassword(Request $request)
+    public function resetPassword(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
         ]);
 
-        try {
-            $user = User::where('email', $request->email)->firstOrFail();
+        $user = User::where('email', $request->email)->first();
+        $admin = Admin::where('email', $request->email)->first();
+
+        if ($user || $admin) {
+            if ($admin) {
+                Password::setDefaultDriver('admins');
+            }
             $status = Password::sendResetLink(
                 $request->only('email')
             );
 
-            return redirect()->route('login')->with('success', 'Berhasil mengirim tautan untuk mereset password. Silakan cek alamat email anda.');
-        } catch (ModelNotFoundException $e) {
-            return redirect()->route('forgot')->with('error', 'Maaf, Kami tidak menemukan alamat email anda');
+            if ($status === Password::RESET_LINK_SENT) {
+                return redirect()->route('login')->with('success', 'Berhasil mengirim tautan untuk mereset password. Silakan cek alamat email Anda.');
+            } else {
+                return redirect()->route('forgot')->with('error', 'Gagal mengirim tautan reset password. Silakan coba lagi nanti.');
+            }
+        } else {
+            return redirect()->route('forgot')->with('error', 'Maaf, Kami tidak dapat menemukan alamat email Anda.');
         }
     }
 
@@ -105,6 +142,10 @@ class LoginController extends Controller
             'token' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:8|confirmed',
+        ], [
+            'password.required' => 'Password tidak boleh kosong.',
+            'password.min' => 'Password minimal harus memiliki 8 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
         ]);
 
         $status = Password::reset(

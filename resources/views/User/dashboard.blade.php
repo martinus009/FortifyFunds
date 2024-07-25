@@ -1,106 +1,24 @@
-@extends('User.layout.header')
+@extends('User.layout.master')
 
-    <!-- header -->
-    <div class="top-header-area" id="sticker">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 col-sm-12 text-center">
-            <div class="main-menu-wrap">
-              <!-- logo -->
-              <div class="site-logo">
-                <a href="#">
-                  <img src="{{ asset('import/assets/img/logo.png')}}" alt="" />
-                </a>
-              </div>
-              <!-- logo -->
+<style>
+    .image-container {
+        width: 100%;
+        height: 150px; /* Atur tinggi gambar sesuai kebutuhan */
+        overflow: hidden;
+    }
 
-              <!-- menu start -->
-              <nav class="main-menu">
-                <ul>
-                  <li class="current-list-item">
-                    <a href="#">Menu</a>
-                    <ul class="sub-menu">
-                      <li><a href="#">Static Home</a></li>
-                      <li><a href="#">Slider Home</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="#">Investasi</a></li>
-                  <li><a href="#">Informasi</a></li>
-                  <!-- <li>
-                    <a href="#">Kontak </a>
-                    <ul class="sub-menu">
-                      <li><a href="#">404 page</a></li>
-                      <li><a href="#">About</a></li>
-                      <li><a href="#">Cart</a></li>
-                      <li><a href="#">Check Out</a></li>
-                      <li><a href="#">Contact</a></li>
-                      <li><a href="#">News</a></li>
-                      <li><a href="#">Shop</a></li>
-                    </ul>
-                  </li> -->
-                  <li>
-                    <a href="#">News</a>
-                    <ul class="sub-menu">
-                      <li><a href="#">News</a></li>
-                      <li><a href="#">Single News</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="#">Contact</a></li>
-                  <li>
-                    <a href="#">Shop</a>
-                    <ul class="sub-menu">
-                      <li><a href="#">Shop</a></li>
-                      <li><a href="#">Check Out</a></li>
-                      <li><a href="#">Single Product</a></li>
-                      <li><a href="#">Cart</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <div class="header-icons">
-                      <a class="shopping-cart" style="pointer-events: none">
-                        <!-- <i class="fas fa-money-bill-wave"></i>  -->
-                        <span>Rp 100.000</span>
-                      </a>
+    .image-container img {
+        /* object-fit: cover; */
+        width: 100%;
+        height: 100%;
+    }
+</style>
 
-                      <!-- <a class="mobile-hide search-bar-icon" href="#"
-                        ><i class="fas fa-search"></i
-                      ></a> -->
-                    </div>
-                  </li>
-                </ul>
-              </nav>
-              <!-- <a class="mobile-show search-bar-icon" href="#"
-                ><i class="fas fa-search"></i
-              ></a> -->
-              <div class="mobile-menu"></div>
-              <!-- menu end -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end header -->
+@section('footer')
+    @include('user.layout.footer')
+@endsection
 
-    <!-- search area -->
-    <!-- <div class="search-area">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <span class="close-btn"><i class="fas fa-window-close"></i></span>
-            <div class="search-bar">
-              <div class="search-bar-tablecell">
-                <h3>Search For:</h3>
-                <input type="text" placeholder="Keywords" />
-                <button type="submit">
-                  Search <i class="fas fa-search"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <!-- end search area -->
+@section('content')
 
     <!-- hero area -->
     <div class="hero-area hero-bg">
@@ -181,68 +99,25 @@
             </div>
           </div>
         </div>
-
         <div class="row">
-          <div class="col-lg-4 col-md-6 text-center">
-            <div class="single-product-item">
-              <div class="product-image">
-                <a href="#"><img src="{{ asset('import/assets/img/bank/bca.png')}}" alt="" /></a>
-              </div>
-              <h3>Bank Central Asia</h3>
-              <p class="product-price"><span>Per LOT</span> 85$</p>
-              <a href="#" class="cart-btn"><i class="fas fa-eye"></i> Lihat</a>
+            @foreach ($invest as $market)
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card h-100 position-relative">
+                    <div class="image-container">
+                        <img src="{{ asset('InvestPhotos/'.$market->image) }}" class="img-fluid card-img" alt="Gambar Bank">
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div>
+                            <h5 class="card-title">{{$market->code}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{$market->name}}</h6>
+                            <p class="card-text mb-0">Rp 9.600</p>
+                            <p class="card-text mb-0 ms-auto">0 (0%)</p>
+                        </div>
+                        <a href="{{ route('invest.detail', $market->slug) }}" class="btn btn-primary position-relative bottom-0 start-0 mb-3 ms-3">Selengkapnya</a>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-lg-4 col-md-6 text-center">
-            <div class="single-product-item">
-              <div class="product-image">
-                <a href="#"><img src="{{ asset('import/assets/img/bank/bca.png')}}" alt="" /></a>
-              </div>
-              <h3>Bank Central Asia</h3>
-              <p class="product-price"><span>Per LOT</span> 85$</p>
-              <a href="#" class="cart-btn"><i class="fas fa-eye"></i> Lihat</a>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 text-center">
-            <div class="single-product-item">
-              <div class="product-image">
-                <a href="#"><img src="{{ asset('import/assets/img/bank/bca.png')}}" alt="" /></a>
-              </div>
-              <h3>Bank Central Asia</h3>
-              <p class="product-price"><span>Per LOT</span> 85$</p>
-              <a href="#" class="cart-btn"><i class="fas fa-eye"></i> Lihat</a>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 text-center">
-            <div class="single-product-item">
-              <div class="product-image">
-                <a href="#"><img src="{{ asset('import/assets/img/bank/bca.png')}}" alt="" /></a>
-              </div>
-              <h3>Bank Central Asia</h3>
-              <p class="product-price"><span>Per LOT</span> 85$</p>
-              <a href="#" class="cart-btn"><i class="fas fa-eye"></i> Lihat</a>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 text-center">
-            <div class="single-product-item">
-              <div class="product-image">
-                <a href="#"><img src="{{ asset('import/assets/img/bank/bca.png')}}" alt="" /></a>
-              </div>
-              <h3>Bank Central Asia</h3>
-              <p class="product-price"><span>Per LOT</span> 70$</p>
-              <a href="#" class="cart-btn"><i class="fas fa-eye"></i> Lihat</a>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0 text-center">
-            <div class="single-product-item">
-              <div class="product-image">
-                <a href="#"><img src="{{ asset('import/assets/img/bank/bca.png')}}" alt="" /></a>
-              </div>
-              <h3>Bank Central Asia</h3>
-              <p class="product-price"><span>Per LOT</span> 35$</p>
-              <a href="#" class="cart-btn"><i class="fas fa-eye"></i> Lihat</a>
-            </div>
-          </div>
+            @endforeach
         </div>
       </div>
     </div>
@@ -261,45 +136,91 @@
           </div>
         </div>
       </div>
-        <div class="col-lg-12 text-center">
+    <div class="col-lg-12 text-center">
         <div class="container">
             <div class="row">
-            <div class="col-md-12">
-                <div id="promoCarousel" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                    <div class="card" style="width: 18rem;">
-                        <img src="{{ asset('import/assets/img/promo/image-20.png')}}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text" align="left">Promo</p>
-                        <h5 class="card-title">Promo Dasyat Hari Ini</h5>
+                <div class="col-md-12">
+                    <div id="promoCarousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="card" style="width: 100%;">
+                                            <img src="{{ asset('import/assets/img/promo/image-20.png')}}" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <p class="card-text" align="left">Promo</p>
+                                                <h5 class="card-title">Promo Dasyat Hari Ini</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="card" style="width: 100%;">
+                                            <img src="{{ asset('import/assets/img/promo/image-20.png')}}" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <p class="card-text" align="left">Promo</p>
+                                                <h5 class="card-title">Promo Dasyat Hari Ini</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="card" style="width: 100%;">
+                                            <img src="{{ asset('import/assets/img/promo/image-20.png')}}" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <p class="card-text" align="left">Promo</p>
+                                                <h5 class="card-title">Promo Dasyat Hari Ini</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Tambahkan 1 atau 2 kartu lainnya di sini untuk mencapai total 2 atau 3 kartu -->
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="card" style="width: 100%;">
+                                            <img src="{{ asset('import/assets/img/promo/image-20.png')}}" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <p class="card-text" align="left">Promo</p>
+                                                <h5 class="card-title">Promo Dasyat Hari Ini</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="card" style="width: 100%;">
+                                            <img src="{{ asset('import/assets/img/promo/image-20.png')}}" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <p class="card-text" align="left">Promo</p>
+                                                <h5 class="card-title">Promo Dasyat Hari Ini</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="card" style="width: 100%;">
+                                            <img src="{{ asset('import/assets/img/promo/image-20.png')}}" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <p class="card-text" align="left">Promo</p>
+                                                <h5 class="card-title">Promo Dasyat Hari Ini</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Tambahkan 1 atau 2 kartu baru untuk slide kedua di sini -->
+                                </div>
+                            </div>
+                            <!-- Tambahkan item-item slider lainnya sesuai kebutuhan -->
                         </div>
+                        <a class="carousel-control-prev" href="#promoCarousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#promoCarousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
-                    </div>
-                    <div class="carousel-item">
-                    <div class="card" style="width: 18rem;">
-                        <img src="{{ asset('import/assets/img/promo/JD.ID-Harinya-Banyak-Diskon.jpg')}}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text" align="left">Promo</p>
-                        <h5 class="card-title">Promo Dasyat Hari Ini</h5>
-                        </div>
-                    </div>
-                    </div>
-                    <!-- Tambahkan item-item slider lainnya sesuai kebutuhan -->
-                </div>
-                <a class="carousel-control-prev" href="#promoCarousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#promoCarousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
                 </div>
             </div>
-            </div>
         </div>
-        </div>
+    </div>
     </section>
     <!-- end cart banner section -->
 
@@ -368,30 +289,39 @@
     <!-- end testimonail-section -->
 
     <!-- advertisement section -->
-<div class="abt-section mb-5">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-6 col-md-12">
-        <div class="abt-bg mt-5">
-          <a href="https://www.youtube.com/watch?v=DBLlFWYcIGQ" class="video-play-btn popup-youtube">
-            <img src="link_gambar" alt="Video Thumbnail" width="100%">
-            <i class="fas fa-play"></i>
-          </a>
-        </div>
-      </div>
-      <div class="col-lg-6 col-md-12">
-        <div class="abt-text">
-          <p class="top-sub">Temukan Lebih Banyak</p>
-          <h2>Tentang <span class="orange-text">FortifyFunds</span></h2>
-          <p align="justify">
-            FortifyFunds adalah dompet digital yang dirancang untuk memberikan keamanan tingkat tinggi untuk transaksi keuangan Anda. Dengan FortifyFunds, Anda bisa melakukan pembayaran, transfer, dan pengelolaan uang dengan mudah dan aman. Kami mengutamakan keamanan data dan dana Anda dengan fitur enkripsi canggih dan otentikasi multi-faktor. Nikmati kemudahan akses keuangan Anda kapan saja dan di mana saja dengan FortifyFunds, e-wallet yang menjaga keamanan dana Anda sekuat benteng. Aplikasi ini cocok untuk semua kalangan, dari pelajar hingga lansia, memberikan solusi keuangan yang praktis dan terpercaya.
-          </p>
-          <a href="#" class="boxed-btn mt-3">Temukan Lebih Banyak</a>
+    <br>
+    <div class="abt-section mb-150">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <div class="abt-bg">
+              <a
+                href="https://www.youtube.com/watch?v=DBLlFWYcIGQ"
+                class="video-play-btn popup-youtube"
+                ><i class="fas fa-play"></i
+              ></a>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <div class="abt-text">
+              <p class="top-sub">Kenali Lebih Dekat</p>
+              <h2> Tentang <span class="orange-text">FortifyFunds</span></h2>
+              @foreach ($contact as $information)
+                <p align="justify">
+                    {{$information->information}}
+                </p>
+              @endforeach
+              <!-- <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Sapiente facilis illo repellat veritatis minus, et labore minima
+                mollitia qui ducimus.
+              </p> -->
+              {{-- <a href="about.html" class="boxed-btn mt-4">know more</a> --}}
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
     <!-- end advertisement section -->
 
@@ -419,92 +349,45 @@
         <div class="row">
           <div class="col-lg-8 offset-lg-2 text-center">
             <div class="section-title">
-              <h3><span class="orange-text">Update</span> Terbaru</h3>
-              <p>Mari Belajar Mengatur Keuangan Dengan FortifyFunds</p>
+              <h3><span class="orange-text">Event</span> Terbaru</h3>
+              {{-- <p>Mari Belajar Mengatur Keuangan Dengan FortifyFunds</p> --}}
             </div>
           </div>
         </div>
 
         <div class="row">
-          <div class="col-lg-4 col-md-6">
-            <div class="single-latest-news fixed-width-card">
-              <!-- Tambahkan kelas fixed-width-card -->
-              <a href="#"><div class="latest-news-bg news-bg-1"></div></a>
-              <div class="news-text-box">
-                <h3>
-                  <a href="#">Cerdas Finansial</a>
-                </h3>
-                <p class="blog-meta">
-                  <span class="author">
-                    <i class="fas fa-user"></i> FortifyFunds
-                  </span>
-                  <span class="date">
-                    <i class="fas fa-calendar"></i> 10 Maret, 2006
-                  </span>
-                </p>
-                <p class="excerpt">Yuk Melek Finansial Bersama FortifyFunds</p>
-                <a href="#" class="read-more-btn"
-                  >Selengkapnya <i class="fas fa-angle-right"></i
-                ></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="single-latest-news fixed-width-card">
-              <!-- Tambahkan kelas fixed-width-card -->
-              <a href="#"><div class="latest-news-bg news-bg-2"></div></a>
-              <div class="news-text-box">
-                <h3>
-                  <a href="#">Promo Voucher Favorit</a>
-                </h3>
-                <p class="blog-meta">
-                  <span class="author">
-                    <i class="fas fa-user"></i> FortifyFunds
-                  </span>
-                  <span class="date">
-                    <i class="fas fa-calendar"></i> 09 September, 2007
-                  </span>
-                </p>
-                <p class="excerpt">
-                  Yuk Cek Berbagai Promo Menarik Di aplikasi FortifyFunds
-                  Sekarang
-                </p>
-                <a href="#" class="read-more-btn"
-                  >Selengkapnya <i class="fas fa-angle-right"></i
-                ></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="single-latest-news fixed-width-card">
-              <!-- Tambahkan kelas fixed-width-card -->
-              <a href="#"><div class="latest-news-bg news-bg-3"></div></a>
-              <div class="news-text-box">
-                <h3>
-                  <a href="#">Gaya Hidup Sehat</a>
-                </h3>
-                <p class="blog-meta">
-                  <span class="author">
-                    <i class="fas fa-user"></i> FortifyFunds
-                  </span>
-                  <span class="date">
-                    <i class="fas fa-calendar"></i> 13 Juni, 2021
-                  </span>
-                </p>
-                <p class="excerpt">5 Manfaat Bersepeda Di Tengah Kota</p>
-                <a href="#" class="read-more-btn"
-                  >Selengkapnya <i class="fas fa-angle-right"></i
-                ></a>
-              </div>
-            </div>
-          </div>
+            @foreach ($events as $event)
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-latest-news fixed-width-card">
+                    <!-- Tambahkan kelas fixed-width-card -->
+                    <a href="{{ route('news.detail', $event->slug) }}"><div class="latest-news-bg news-bg-1"></div></a>
+                    <div class="news-text-box">
+                        <h3>
+                        <a href="{{ route('news.detail', $event->slug) }}">{{$event->title}}</a>
+                        </h3>
+                        <p class="blog-meta">
+                        <span class="author">
+                            <i class="fas fa-user"></i> FortifyFunds
+                        </span>
+                        <span class="date">
+                            <i class="fas fa-calendar"></i> {{ \Carbon\Carbon::parse($event->created_at)->format('d F Y') }}
+                        </span>
+                        </p>
+                        <p class="excerpt">{!! Illuminate\Support\Str::limit(strip_tags($event->content), 100) !!}</p>
+                        <a href="{{ route('news.detail', $event->slug) }}" class="read-more-btn"
+                        >Selengkapnya <i class="fas fa-angle-right"></i
+                        ></a>
+                    </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
 
-        <div class="row">
+        {{-- <div class="row">
           <div class="col-lg-12 text-center">
             <a href="#" class="boxed-btn">More News</a>
           </div>
-        </div>
+        </div> --}}
       </div>
     </div>
     <!-- end latest news -->
@@ -536,5 +419,4 @@
       </div>
     </div> -->
     <!-- end logo carousel -->
-
-    @include('User.layout.footer')
+@endsection

@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('password');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('saldo');
+            $table->string('saldo')->nullable();
+            $table->timestamp('blocked_until')->nullable();
+            $table->string('status')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
