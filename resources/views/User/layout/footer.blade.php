@@ -41,7 +41,6 @@
             <p>
               Copyrights &copy; 2024 -
               <a href="#">FortifyFunds</a>, All Rights Reserved.<br />
-              <!-- Distributed By - <a href="https://themewagon.com/">Themewagon</a> -->
             </p>
           </div>
           <div class="col-lg-6 text-right col-md-12">
@@ -129,7 +128,6 @@
         var amount = document.getElementById('amount').value.replace(/[^\d]/g, '');
 
         if (amount === '') {
-            // Jika amount kosong, keluar dari fungsi
             return;
         }
 

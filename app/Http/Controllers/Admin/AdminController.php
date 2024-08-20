@@ -146,7 +146,7 @@ class AdminController extends Controller
             'content' => $request->content,
             'category' => $request->category,
             'status' => $request->status,
-            'image' => $nama_foto, // Simpan nama file gambar
+            'image' => $nama_foto,
         ]);
 
         return redirect()->route('admin.article')->with('success', 'Postingan berhasil ditambahkan');
@@ -173,18 +173,20 @@ class AdminController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'address' => 'required',
+            'information' => 'required|string',
+            'address' => 'required|string',
             'phone' => 'required',
             'email' => 'required|string|email|max:255',
         ]);
 
-        $contact = Contact::first(); // Ganti dengan cara Anda mengambil ID kontak dari formulir
+        $contact = Contact::first();
 
         if (!$contact) {
             return redirect()->back()->with('error', 'Kontak tidak ditemukan.');
         }
 
         $contact->name = $request->name;
+        $contact->information = $request->information;
         $contact->address = $request->address;
         $contact->phone = $request->phone;
         $contact->email = $request->email;

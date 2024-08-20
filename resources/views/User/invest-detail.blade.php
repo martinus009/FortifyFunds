@@ -2,7 +2,6 @@
 
 @section('content')
     <style>
-      /* Custom CSS untuk tampilan lebih baik */
       .card {
         margin-bottom: 20px;
         border: none;
@@ -17,7 +16,7 @@
         padding: 20px;
       }
       .chart-container {
-        height: 300px; /* Tinggi grafik disesuaikan agar sesuai dengan konten */
+        height: 300px;
         margin-top: 20px;
       }
       .btn-buy {
@@ -101,7 +100,6 @@
 	<div class="single-product mt-150 mb-150">
     <div class="container mt-5">
       <div class="row">
-        <!-- Informasi Dasar Saham -->
         <div class="col-lg-8">
           <div class="card">
             <div class="card-header">
@@ -118,17 +116,13 @@
               <p class="card-text">Harga Saat Ini: Rp 9.600</p>
               <p class="card-text">Perubahan Harga: 0 (0%)</p>
               <hr />
-              <!-- Grafik Harga -->
               <div class="chart-container">
-                <!-- Tempat untuk grafik menggunakan library seperti Chart.js -->
                 <canvas id="priceChart"></canvas>
               </div>
-              <!-- Tombol Beli Saham -->
               <a href="#" class="btn btn-success btn-buy mt-3">Beli Saham</a>
             </div>
           </div>
         </div>
-        <!-- Informasi Tambahan -->
         <div class="col-lg-4">
           <div class="card">
             <div class="card-header">
@@ -237,7 +231,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Script untuk inisialisasi dan pengaturan grafik -->
     <script>
-      // Data contoh untuk grafik
       var priceData = {
         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Des"],
         datasets: [
@@ -251,7 +244,6 @@
         ],
       };
 
-      // Pengaturan grafik
       var priceCtx = document.getElementById("priceChart").getContext("2d");
       var priceChart = new Chart(priceCtx, {
         type: "line",

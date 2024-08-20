@@ -9,6 +9,5 @@ class Invest extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
-    protected $fillable = ['code', 'slug', 'name', 'image', 'category'];
+    protected $guarded = ['id'];
 }

@@ -18,6 +18,6 @@ class Artikel extends Model
         $this->attributes['slug'] = Str::slug($value);
     }
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
     protected $dates = ['created_at'];
 }

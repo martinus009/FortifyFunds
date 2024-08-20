@@ -22,7 +22,7 @@
 @endif
 
     <div class="logo">
-        <img src="{{ asset('image/logo.png') }}">
+        <img src="{{ asset('image/logo.png') }}" alt="Image Logo">
         <a href="#">FortifyFunds</a>
     </div>
 

@@ -82,6 +82,7 @@
                                             <th>Nama</th>
                                             <th>Email</th>
                                             <th>Ponsel</th>
+                                            <th></th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>

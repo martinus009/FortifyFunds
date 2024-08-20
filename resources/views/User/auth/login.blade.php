@@ -9,7 +9,6 @@
         <title>FortifyFunds | Keamanan Yang Kuat Untuk Keuangan Anda</title>
     </head>
     <body>
-        <!-- Tampilkan pesan kesalahan validasi -->
     @if ($errors->any())
         <script>
             document.addEventListener("DOMContentLoaded", function() {
@@ -20,7 +19,6 @@
         </script>
     @endif
 
-    <!-- Tampilkan pesan sukses -->
     @if (session('success'))
         <script>
             document.addEventListener("DOMContentLoaded", function() {
@@ -64,7 +62,6 @@
                             Lupa Password? <a href="{{ route('forgot') }}">Klik Disini</a>
                         </p>
                         <input type="submit" value="Login" class="btn solid" />
-
                     </form>
                     <form action="{{ route('input') }}" method="POST" class="sign-up-form">
                         @csrf
@@ -90,21 +87,6 @@
                             <input type="password" placeholder="Password" name="password" autocomplete="off" />
                         </div>
                         <input type="submit" class="btn" value="KIRIM" />
-                        <!-- <p class="social-text">Or Sign up with social platforms</p> -->
-                        <!-- <div class="social-media">
-              <a href="#" class="social-icon">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-            </div> -->
                     </form>
                 </div>
             </div>
@@ -139,5 +121,48 @@
         <script src="{{ asset('import/assets/js/app.js')}}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('.sign-up-form');
+    const submitButton = document.querySelector('.sign-up-form .btn');
+
+    submitButton.addEventListener('click', function (event) {
+      // Prevent the default form submission
+      event.preventDefault();
+
+      Swal.fire({
+        title: 'Atur PIN Transaksi',
+        input: 'password',
+        inputLabel: 'Masukkan PIN Transaksi',
+        inputPlaceholder: 'Masukkan PIN...',
+        inputAttributes: {
+          autocapitalize: 'off',
+          maxlength: 6 // Optional: Limit input length on the client side
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Kirim',
+        cancelButtonText: 'Batal',
+        confirmButtonColor: '#007bff',
+        cancelButtonColor: '#dc3545',
+        inputValidator: (value) => {
+          if (!value) {
+            return 'PIN transaksi tidak boleh kosong!';
+          }
+          if (!/^\d{6}$/.test(value)) {
+            return 'PIN harus terdiri dari 6 digit!';
+          }
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Optionally, you could validate the PIN here again if needed
+          form.submit();
+        }
+      });
+    });
+  });
+</script>
     </body>
 </html>

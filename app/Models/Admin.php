@@ -14,7 +14,7 @@ class Admin extends Authenticatable
     protected $table = 'admins';
 
     // Jika perlu, atur atribut yang fillable atau guarded
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     // Jika diperlukan, definisikan relasi atau metode lain di sini
 }

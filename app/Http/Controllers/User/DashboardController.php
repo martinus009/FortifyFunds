@@ -11,6 +11,7 @@ use App\Models\Contact;
 use App\Models\Suggestion;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,28 @@ class DashboardController extends Controller
     {
         return view('user.about');
     }
+
+    public function banAccount(Request $request)
+    {
+        $user = auth()->user(); // Ambil pengguna yang sedang login
+
+        // Update status pengguna menjadi banned
+        $user->is_permanent_block = true;
+        $user->blocked_until = null;
+        $user->status = 'banned';
+        $user->save();
+
+        // Logout pengguna
+        auth()->logout();
+
+        // Menghapus sesi pengguna
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        // Redirect ke halaman login atau halaman lain yang sesuai
+        return redirect()->route('login')->with('error', 'Akun Anda telah diblokir.');
+    }
+
 
     public function news()
     {

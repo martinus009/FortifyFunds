@@ -1,5 +1,5 @@
 @extends('Admin.layout.master')
-@php
+{{-- @php
 function formatRupiah($saldo) {
     $suffixes = ['', 'Rb', 'Jt', 'M', 'T', 'Kuad'];
     $suffixIndex = 0;
@@ -12,7 +12,7 @@ function formatRupiah($saldo) {
     return number_format($saldo, 3, '.', '.') . $suffixes[$suffixIndex];
 }
 
-@endphp
+@endphp --}}
 @section('content')
 <body>
   <div id="app">
@@ -54,7 +54,8 @@ function formatRupiah($saldo) {
                     </div>
                   </div>
                 </div>
-                <div class="card-icon shadow-primary bg-primary">
+                <div class="card-icon shadow-primary bg-primary text-white">
+                    <i class="fa-solid fa-user"></i>
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
@@ -71,14 +72,15 @@ function formatRupiah($saldo) {
                 <div class="card-chart" style="height: 60px">
                   {{-- <canvas id="balance-chart"></canvas> --}}
                 </div>
-                <div class="card-icon shadow-primary bg-primary">
+                <div class="card-icon shadow-primary bg-primary text-white">
+                    <i class="fa-solid fa-rupiah-sign"></i>
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>Total Saldo</h4>
+                    <h4>Total Aset</h4>
                   </div>
                   <div class="card-body">
-                    Rp{{ formatRupiah(Auth::user()->saldo) }}
+                    Rp{{ number_format(Auth::user()->saldo, 0, ',', '.') }}
                   </div>
                 </div>
               </div>
@@ -88,7 +90,8 @@ function formatRupiah($saldo) {
                 <div class="card-chart" style="height: 60px">
                   {{-- <canvas id="sales-chart" height="80"></canvas> --}}
                 </div>
-                <div class="card-icon shadow-primary bg-primary">
+                <div class="card-icon shadow-primary bg-primary text-white">
+                    <i class="fa-solid fa-newspaper"></i>
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">

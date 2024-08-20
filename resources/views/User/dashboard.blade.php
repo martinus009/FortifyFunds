@@ -3,7 +3,7 @@
 <style>
     .image-container {
         width: 100%;
-        height: 150px; /* Atur tinggi gambar sesuai kebutuhan */
+        height: 150px;
         overflow: hidden;
     }
 
@@ -171,7 +171,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Tambahkan 1 atau 2 kartu lainnya di sini untuk mencapai total 2 atau 3 kartu -->
                                 </div>
                             </div>
                             <div class="carousel-item">
@@ -203,10 +202,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Tambahkan 1 atau 2 kartu baru untuk slide kedua di sini -->
                                 </div>
                             </div>
-                            <!-- Tambahkan item-item slider lainnya sesuai kebutuhan -->
                         </div>
                         <a class="carousel-control-prev" href="#promoCarousel" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -359,7 +356,6 @@
             @foreach ($events as $event)
                 <div class="col-lg-4 col-md-6">
                     <div class="single-latest-news fixed-width-card">
-                    <!-- Tambahkan kelas fixed-width-card -->
                     <a href="{{ route('news.detail', $event->slug) }}"><div class="latest-news-bg news-bg-1"></div></a>
                     <div class="news-text-box">
                         <h3>

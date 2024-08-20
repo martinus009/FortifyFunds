@@ -52,9 +52,9 @@
                                         <div class="empty-state-icon">
                                             <i class="fas fa-question"></i>
                                         </div>
-                                        <h2>Kami tidak dapat menemukan postingan apa pun</h2>
+                                        <h2>Kami tidak dapat menemukan Berita apa pun</h2>
                                         <p class="lead">
-                                            Maaf, kami tidak dapat menemukan postingan apa pun. Untuk menghilangkan pesan ini, buatlah setidaknya satu artikel.
+                                            Maaf, kami tidak dapat menemukan Berita apa pun. Untuk menghilangkan pesan ini, buatlah setidaknya satu Berita.
                                         </p>
                                         {{-- <a href="{{('edit.article')}}" class="btn btn-primary mt-4">Create New Article</a>
                                         <a href="{{('edit.article')}}" class="mt-4 bb">Need Help?</a> --}}
@@ -118,4 +118,4 @@
   </div>
 </body>
 </html>
-@endsection()
+@endsection

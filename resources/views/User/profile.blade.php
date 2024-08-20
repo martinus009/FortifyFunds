@@ -195,17 +195,15 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
             var passwordConfirmationValue = passwordConfirmation.value;
 
             if (passwordValue.length < 8 || passwordConfirmationValue !== passwordValue) {
-                submitButton.disabled = true; // nonaktifkan tombol jika tidak sesuai
+                submitButton.disabled = true;
             } else {
-                submitButton.disabled = false; // aktifkan tombol jika sesuai
+                submitButton.disabled = false;
             }
         }
 
-        // Event listener untuk input password
         password.addEventListener('input', validateForm);
         passwordConfirmation.addEventListener('input', validateForm);
 
-        // Panggil validateForm() saat halaman dimuat
         validateForm();
     });
 </script>

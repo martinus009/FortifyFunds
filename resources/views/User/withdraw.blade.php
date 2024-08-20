@@ -19,7 +19,7 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    margin-top: -30px; /* Penyesuaian untuk breadcrumb overlay */
+    margin-top: -30px;
   }
 
   .steps,
@@ -126,75 +126,113 @@
 
 <!-- SweetAlert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
-  function formatRupiah(el) {
-    // Mengambil nilai dari input
-    var value = el.value;
+  let attemptCount = 0;
+  const maxAttempts = 5;
 
-    // Menghapus karakter non-digit
-    value = value.replace(/[^\d]/g, '');
+  async function validateTopUp(event) {
+    event.preventDefault(); // Prevent default form submission
 
-    // Mengambil panjang karakter value
-    var length = value.length;
-
-    // Menginisialisasi variabel untuk menyimpan hasil format
-    var formattedValue = '';
-
-    // Looping untuk menambahkan titik pada setiap 3 digit dari belakang
-    for (var i = 0; i < length; i++) {
-      if ((length - i) % 3 == 0 && i != 0) {
-        formattedValue += '.';
-      }
-      formattedValue += value.charAt(i);
-    }
-
-    // Mengisi kembali nilai input dengan format yang benar
-    el.value = formattedValue;
-  }
-
-  function validateTopUp() {
-    // Mengambil nilai input dan menghapus titik sebagai pemisah ribuan
-    var amount = document.getElementById('nominal').value.replace(/\./g, '');
-
-    // Validasi minimal top up adalah Rp50.000
-    if (amount < 50000) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: 'Minimal nominal Tarik Tunai adalah Rp50.000.',
-        confirmButtonColor: '#007bff'
-      });
-      return false; // Menghentikan pengiriman formulir jika validasi gagal
-    }
-
-    // Tampilkan konfirmasi sebelum submit
-    Swal.fire({
-      icon: 'question',
-      title: 'Konfirmasi Tarik Tunai',
-      html: `Anda akan melakukan Tarik Tunai sebesar <b>${document.getElementById('nominal').value} IDR</b>. Lanjutkan?`,
+    const swalResult = await Swal.fire({
+      title: 'Atur PIN Transaksi',
+      input: 'password',
+      inputLabel: 'Masukkan PIN Transaksi',
+      inputPlaceholder: 'Masukkan PIN...',
+      inputAttributes: {
+        autocapitalize: 'off',
+        maxlength: 6 // Limit input length on the client side
+      },
       showCancelButton: true,
-      confirmButtonText: 'Ya, Lanjutkan',
+      confirmButtonText: 'Kirim',
       cancelButtonText: 'Batal',
       confirmButtonColor: '#007bff',
-      cancelButtonColor: '#dc3545'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        document.getElementById('topUpForm').submit();
+      cancelButtonColor: '#dc3545',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'PIN transaksi tidak boleh kosong!';
+        }
+        if (!/^\d{6}$/.test(value)) {
+          return 'PIN harus terdiri dari 6 digit!';
+        }
       }
     });
 
-    return false; // Menghentikan pengiriman formulir saat menampilkan SweetAlert
+    if (swalResult.isConfirmed) {
+      const pinValue = swalResult.value;
+
+      // Simulate PIN validation
+      const isPinValid = validatePin(pinValue); // Replace with your actual validation function
+
+      if (isPinValid) {
+        document.getElementById('topUpForm').submit(); // Submit the form
+      } else {
+        attemptCount++;
+        if (attemptCount >= maxAttempts) {
+          try {
+            const response = await fetch('{{ route('banAccount') }}', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+              },
+              credentials: 'same-origin'
+            });
+
+            if (response.ok) {
+              const data = await response.json();
+              Swal.fire({
+                icon: 'error',
+                title: 'Akun Terblokir',
+                text: 'Anda telah melebihi jumlah percobaan PIN yang diizinkan. Akun Anda telah diblokir.',
+                confirmButtonColor: '#007bff'
+              }).then(() => {
+                window.location.href = '{{ route('login') }}'; // Redirect to login page
+              });
+            } else {
+              // Handle non-200 responses
+              Swal.fire({
+                icon: 'error',
+                title: 'Terjadi Kesalahan',
+                text: 'Gagal memproses permintaan untuk memblokir akun.',
+                confirmButtonColor: '#007bff'
+              }).then(() => {
+                window.location.href = '{{ route('login') }}'; // Redirect to login page
+              });
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Akun Terblokir',
+              text: 'Anda telah melebihi jumlah percobaan PIN yang diizinkan. Akun Anda telah diblokir.',
+              confirmButtonColor: '#007bff'
+              }).then(() => {
+                window.location.href = '{{ route('login') }}'; // Redirect to login page
+              });
+          }
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'PIN Salah',
+            text: `PIN yang Anda masukkan salah. Sisa percobaan: ${maxAttempts - attemptCount}`,
+            confirmButtonColor: '#007bff'
+          }).then(() => {
+            validateTopUp(event); // Prompt for PIN again
+          });
+        }
+      }
+    }
   }
 
-  // Function to show success notification after form submission
-  @if(session('success'))
-  Swal.fire({
-    icon: 'success',
-    title: 'Tarik Tunai Berhasil',
-    text: '{{ session('success') }}',
-    confirmButtonColor: '#007bff'
-  });
-  @endif
+  function validatePin(pin) {
+    // Replace this function with your actual PIN validation logic
+    const correctPin = '123456'; // Example correct PIN for demonstration
+    return pin === correctPin;
+  }
+
+  document.querySelector('#topUpForm').addEventListener('submit', validateTopUp);
 </script>
 
 @endsection
+ 

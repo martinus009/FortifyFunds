@@ -57,7 +57,7 @@ class LoginController extends Controller
 
         $user = User::where('username', $request->username)->first();
 
-        if ($user && $user->blocked_until && $user->blocked_until > now()) {
+        if ($user && $user->blocked_until && $user->is_permanent_block > now()) {
             return redirect()->back()->withErrors([
                 'username' => 'Maaf, Akun Anda telah Di Tangguhkan untuk sementara waktu.',
             ])->withInput($request->only('username'));

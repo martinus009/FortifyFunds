@@ -41,7 +41,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             text-align: center;
-            width: calc(50% - 10px); /* 50% width minus gap */
+            width: calc(50% - 10px);
             margin-bottom: 20px;
         }
         .topup-card:hover {
@@ -71,10 +71,9 @@
             background-color: #0056b3;
         }
 
-        /* Media query for responsiveness */
         @media (max-width: 768px) {
             .topup-card {
-                width: 100%; /* Full width on smaller screens */
+                width: 100%;
             }
         }
     </style>

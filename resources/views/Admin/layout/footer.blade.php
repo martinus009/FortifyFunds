@@ -24,6 +24,7 @@
     <script src="{{ asset('import/admin/assets/js/scripts.js') }}"></script>
     <script src="{{ asset('import/admin/assets/js/custom.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://kit.fontawesome.com/5b78f342f3.js" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
             $('#phone_number').on('input', function() {

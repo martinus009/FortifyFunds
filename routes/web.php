@@ -46,6 +46,7 @@ Route::middleware(['auth:users'])->group(function () {
     Route::get('FortifyFunds/user/history', [DashboardController::class, 'transactionHistory'])->name('history');
     Route::post('FortifyFunds/user/contact/suggestion-send', [DashboardController::class, 'suggestion'])->name('suggestion');
     Route::get('FortifyFunds/user/transfer/send', [DashboardController::class, 'adminFee'])->name('adminFee');
+    Route::post('/ban-account', [DashboardController::class, 'banAccount'])->name('banAccount');
 });
 Route::get('FortifyFunds/user/login', [LoginController::class, 'login'])->name('login');
 Route::post('FortifyFunds/user/login/register', [LoginController::class, 'input'])->name('input');

@@ -19,7 +19,7 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    margin-top: -30px; /* Penyesuaian untuk breadcrumb overlay */
+    margin-top: -30px;
   }
 
   .steps,
@@ -123,25 +123,30 @@
       <button type="submit">Top Up</button>
     </form>
   </div>
+  {{-- <div class="qr-code-section mt-5">
+  <h2>QR Code Pembayaran</h2>
+  <div id="qrCodeContainer" style="display: none;">
+    <img id="qrCodeImage" src="" alt="QR Code" />
+  </div>
+</div> --}}
 </div>
 
 <!-- SweetAlert2 JS -->
+<!-- SweetAlert2 JS -->
+<!-- SweetAlert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script> <!-- QR Code generator library -->
+
 <script>
   function formatRupiah(el) {
-    // Mengambil nilai dari input
     var value = el.value;
 
-    // Menghapus karakter non-digit
     value = value.replace(/[^\d]/g, '');
 
-    // Mengambil panjang karakter value
     var length = value.length;
 
-    // Menginisialisasi variabel untuk menyimpan hasil format
     var formattedValue = '';
 
-    // Looping untuk menambahkan titik pada setiap 3 digit dari belakang
     for (var i = 0; i < length; i++) {
       if ((length - i) % 3 == 0 && i != 0) {
         formattedValue += '.';
@@ -149,26 +154,22 @@
       formattedValue += value.charAt(i);
     }
 
-    // Mengisi kembali nilai input dengan format yang benar
     el.value = formattedValue;
   }
 
   function validateTopUp() {
-    // Mengambil nilai input dan menghapus titik sebagai pemisah ribuan
     var amount = document.getElementById('nominal').value.replace(/\./g, '');
 
-    // Validasi minimal top up adalah Rp50.000
     if (amount < 50000) {
       Swal.fire({
         icon: 'error',
-        title: 'Error!',
+        title: 'Kesalahan',
         text: 'Minimal nominal top up adalah Rp50.000.',
         confirmButtonColor: '#007bff'
       });
-      return false; // Menghentikan pengiriman formulir jika validasi gagal
+      return false;
     }
 
-    // Tampilkan konfirmasi sebelum submit
     Swal.fire({
       icon: 'question',
       title: 'Konfirmasi Top Up',
@@ -180,14 +181,31 @@
       cancelButtonColor: '#dc3545'
     }).then((result) => {
       if (result.isConfirmed) {
-        document.getElementById('topUpForm').submit();
+        var qrCodeData = 'https://example.com/confirm-topup?amount=' + amount; // Replace with your URL or data
+
+        var qr = qrcode(0, 'L');
+        qr.addData(qrCodeData);
+        qr.make();
+
+        var qrCodeImage = qr.createDataURL();
+
+        Swal.fire({
+          icon: 'info',
+          title: 'QR Code Pembayaran',
+          html: `<p>Silakan tunjukkan QR code berikut ke kasir:</p><div style="text-align: center;"><img src="${qrCodeImage}" alt="QR Code" style="width: 200px; height: 200px; border: 2px solid #ddd; border-radius: 10px;" /></div>`,
+          confirmButtonText: 'Selesai',
+          confirmButtonColor: '#007bff'
+        }).then(() => {
+          document.getElementById('topUpForm').submit(); // Submit the form after showing QR code
+        });
+
+        return false; // Prevent form submission until QR code is shown
       }
     });
 
-    return false; // Menghentikan pengiriman formulir saat menampilkan SweetAlert
+    return false;
   }
 
-  // Function to show success notification after form submission
   @if(session('success'))
   Swal.fire({
     icon: 'success',
@@ -197,5 +215,7 @@
   });
   @endif
 </script>
+
+
 
 @endsection

@@ -49,7 +49,7 @@
                                         <div class="empty-state-icon">
                                             <i class="fas fa-question"></i>
                                         </div>
-                                        <h2>Tidak ada postingan yang tersedia saat ini.</h2>
+                                        <h2>Tidak ada Berita yang tersedia saat ini.</h2>
                                         {{-- <p class="lead">
                                             Sorry, there are no news articles available at the moment. Please check back later.
                                         </p> --}}

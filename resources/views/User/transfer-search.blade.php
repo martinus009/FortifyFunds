@@ -76,7 +76,7 @@
                     <div class="form-group">
                         <label for="phone">Masukkan Nomor Telepon</label>
                         <div class="input-group">
-                            <input type="text" id="phone" name="phone" class="form-control" placeholder="Masukkan nomor telepon" autocomplete="off">
+                            <input type="text" id="phone" name="phone" class="form-control" autocomplete="off">
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-primary">Cari Pengguna</button>
                             </div>
@@ -134,18 +134,13 @@
 
 
     <script>
-    // Ambil elemen input dengan id 'phone'
     var phoneInput = document.getElementById('phone');
 
-    // Tambahkan event listener untuk event input
     phoneInput.addEventListener('input', function(event) {
-        // Dapatkan nilai input saat ini
         var inputValue = phoneInput.value;
 
-        // Hapus semua karakter yang bukan angka
         var numericValue = inputValue.replace(/\D/g, '');
 
-        // Update nilai input dengan hanya angka yang valid
         phoneInput.value = numericValue;
     });
 </script>

@@ -9,6 +9,5 @@ class Suggestion extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
-    protected $fillable = ['name', 'email', 'phone', 'subject', 'message'];
+    protected $guarded = ['id'];
 }

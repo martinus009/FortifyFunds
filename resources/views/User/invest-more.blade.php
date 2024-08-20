@@ -87,7 +87,6 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="pagination-wrap">
-                        <!-- Menggunakan links tanpa icon -->
                         {{ $invest->links('pagination::bootstrap-5') }}
                     </div>
                 </div>
